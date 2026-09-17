@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thông Báo Đơn Hàng Mới Từ AI Sales Rep</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 24px;
+      color: #1f2937;
+    }
+    .container {
+      max-width: 620px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
+    }
+    .header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      padding: 32px 28px;
+      color: #ffffff;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .content {
+      padding: 28px;
+    }
+    .order-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .order-box div {
+      font-size: 14px;
+    }
+    .customer-card {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+    .customer-card h3 {
+      margin: 0 0 10px 0;
+      font-size: 15px;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+    }
+    .customer-detail {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+    .customer-detail strong {
+      color: #111827;
+      min-width: 90px;
+      display: inline-block;
+    }
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+    }
+    .items-table th {
+      background-color: #f9fafb;
+      text-align: left;
+      padding: 12px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .items-table td {
+      padding: 14px;
+      font-size: 14px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .total-row td {
+      font-weight: 700;
+      font-size: 16px;
+      color: #1e3a8a;
+      border-top: 2px solid #e5e7eb;
+      border-bottom: none;
+      padding-top: 16px;
+    }
+    .notes-box {
+      background-color: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #92400e;
+      margin-bottom: 24px;
+    }
+    .cta-container {
+      text-align: center;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .call-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff !important;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      font-size: 14px;
+    }
+    .footer {
+      background-color: #f9fafb;
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      border-top: 1px solid #f3f4f6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <span class="badge">🔥 Chốt đơn thành công</span>
+      <h1>Đơn Hàng Mới Từ AI Sales Rep</h1>
+      <p style="margin: 6px 0 0 0; opacity: 0.9; font-size: 14px;">Gemini AI vừa chốt một đơn hàng mới từ khách hàng!</p>
+    </div>
+
+    <div class="content">
+      <table style="width: 100%; margin-bottom: 20px;">
+        <tr>
+          <td><strong>Mã đơn hàng:</strong> <span style="color: #2563eb; font-weight: bold;">{{ order.id }}</span></td>
+          <td style="text-align: right;"><strong>Thời gian:</strong> {{ order.created_at|date:"d/m/Y H:i" }}</td>
+        </tr>
+      </table>
+
+      <div class="customer-card">
+        <h3>👤 Thông Tin Khách Hàng</h3>
+        <div class="customer-detail"><strong>Họ và tên:</strong> {{ order.customer_name }}</div>
+        <div class="customer-detail"><strong>Số điện thoại:</strong> <a href="tel:{{ order.customer_phone }}" style="color: #2563eb; font-weight: 600;">{{ order.customer_phone }}</a></div>
+        <div class="customer-detail"><strong>Địa chỉ nhận:</strong> {{ order.customer_address }}</div>
+      </div>
+
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th>Sản phẩm</th>
+            <th style="text-align: center;">SL</th>
+            <th style="text-align: right;">Đơn giá</th>
+            <th style="text-align: right;">Thành tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order.items.all %}
+          <tr>
+            <td><strong>{{ item.product_name }}</strong></td>
+            <td style="text-align: center;">{{ item.quantity }}</td>
+            <td style="text-align: right;">{{ item.price|floatformat:0 }} đ</td>
+            <td style="text-align: right; font-weight: 600;">{{ item.subtotal|floatformat:0 }} đ</td>
+          </tr>
+          {% endfor %}
+          <tr class="total-row">
+            <td colspan="3">TỔNG GIÁ TRỊ ĐƠN HÀNG:</td>
+            <td style="text-align: right; color: #dc2626;">{{ order.total_amount|floatformat:0 }} VNĐ</td>
+          </tr>
+        </tbody>
+      </table>
+
+      {% if order.notes %}
+      <div class="notes-box">
+        <strong>📝 Ghi chú từ cuộc trò chuyện:</strong><br>
+        {{ order.notes }}
+      </div>
+      {% endif %}
+
+      <div class="cta-container">
+        <a href="tel:{{ order.customer_phone }}" class="call-btn">
+          📞 Gọi Điện Xác Nhận Với Khách Hàng Ngay
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">
+      Email tự động được gửi từ hệ thống AI Sales Rep (sale-ai) • Powered by Google Gemini & Django
+    </div>
+  </div>
+</body>
+</html>
