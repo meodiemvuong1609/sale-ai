@@ -10,13 +10,14 @@ services:
     environment:
       - DJANGO_SECRET_KEY=sale-ai-production-secret-key-2026
       - DEBUG=False
+      - DATA_DIR=/app/data
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
       - GEMINI_MODEL=gemini-2.5-flash
       - ADMIN_NOTIFICATION_EMAIL=${ADMIN_NOTIFICATION_EMAIL:-admin@sale-ai.vn}
       - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL:-noreply@sale-ai.vn}
       - EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
     volumes:
-      - db_data:/app
+      - db_data:/app/data
 
   frontend:
     build:
