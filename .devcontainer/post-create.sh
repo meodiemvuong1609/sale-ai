@@ -22,3 +22,13 @@ docker compose --env-file backend/.env up -d --build
 echo "=== Deployment Complete ==="
 echo "Frontend is running on port 3000"
 echo "Backend API is running on port 8000"
+
+if [ -n "$CODESPACE_NAME" ]; then
+  # Auto set port 3000 to public so anyone can access
+  gh codespace ports visibility 3000:public -c "$CODESPACE_NAME" 2>/dev/null || true
+  DOMAIN="${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}"
+  echo "---------------------------------------------------------"
+  echo "🌐 LINK GỬI KHÁCH HÀNG (PUBLIC URL):"
+  echo "https://${CODESPACE_NAME}-3000.${DOMAIN}"
+  echo "---------------------------------------------------------"
+fi
