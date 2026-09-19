@@ -1,166 +1,114 @@
 ================================================================================
-          HƯỚNG DẪN SỬ DỤNG HỆ THỐNG SALE-AI (TƯ VẤN & BÁN HÀNG TỰ ĐỘNG)
+           HƯỚNG DẪN DÀNH CHO KHÁCH HÀNG - HỆ THỐNG MUA SẮM THÔNG MINH SALE-AI
 ================================================================================
 
-1. GIỚI THIỆU HỆ THỐNG
+Kính chào Quý khách! 
+Chào mừng Quý khách đến với Trợ lý Bán hàng Thông minh Sale-AI. Hệ thống hoạt động 
+24/7 với trí tuệ nhân tạo (AI) giúp Quý khách tìm kiếm sản phẩm phù hợp nhất, 
+tư vấn giải pháp gia dụng hiện đại và đặt hàng nhanh chóng chỉ trong vài tin nhắn.
+
+
+PHẦN 1: CÁC TIỆN ÍCH DÀNH CHO QUÝ KHÁCH
 --------------------------------------------------------------------------------
-Hệ thống Sale-AI là nền tảng bán hàng thương mại điện tử thông minh kết hợp:
-- Backend: Django 5.x + Django REST Framework + Google Gemini AI (gemini-2.5-flash)
-- Frontend: React 19 + Vite + Vanilla CSS hiện đại
-- Hỗ trợ đa ngôn ngữ: Tiếng Việt (vi) và Tiếng Lào (lo - ພາສາລາວ)
-- AI Sales Agent: Nhận diện nhu cầu, tư vấn chi tiết, xử lý từ chối giá, chốt đơn tự động
-- Đặt hàng & Gửi Email: Tạo đơn trực tiếp trong luồng chat và gửi email thông báo tới Admin
-- Triển khai: Đóng gói Docker, Docker Compose, CI/CD GitHub Actions, GitHub Codespaces
+1. Tư vấn chuyên sâu 24/7:
+   - Giải đáp chi tiết tính năng kỹ thuật, công nghệ, công suất, kích thước.
+   - Gợi ý sản phẩm phù hợp theo ngân sách và diện tích sử dụng của gia đình.
 
-GitHub Repository: https://github.com/meodiemvuong1609/sale-ai (Nhánh: master)
+2. Hỗ trợ đa ngôn ngữ:
+   - Hệ thống hỗ trợ hoàn chỉnh cả Tiếng Việt (🇻🇳) và Tiếng Lào (🇱🇦 - ພາສາລາວ).
+   - Quý khách có thể thoải mái đặt câu hỏi bằng ngôn ngữ mẹ đẻ của mình.
 
+3. Đặt hàng tức thì trong khung chat:
+   - Không cần tạo tài khoản phức tạp, không cần điền form rườm rà.
+   - Chỉ cần nhắn tin tên sản phẩm, địa chỉ và số điện thoại, AI sẽ tự động tạo đơn.
 
-2. CẤU HÌNH BIẾN MÔI TRƯỜNG (backend/.env)
---------------------------------------------------------------------------------
-Tệp cấu hình nằm tại: backend/.env
-Định dạng mẫu (tham khảo backend/.env.example):
-
-  # 1. Khóa Google Gemini API
-  GEMINI_API_KEY=your_gemini_api_key_here
-  GEMINI_MODEL=gemini-2.5-flash
-
-  # 2. Email nhận thông báo khi có đơn hàng mới
-  ADMIN_NOTIFICATION_EMAIL=admin@sale-ai.vn
-  DEFAULT_FROM_EMAIL=noreply@sale-ai.vn
-
-  # 3. Chế độ gửi email
-  # Chế độ thử nghiệm (In trực tiếp nội dung email ra terminal/console log):
-  EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
-
-  # Chế độ gửi email thực tế qua Gmail SMTP:
-  # EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-  # EMAIL_HOST=smtp.gmail.com
-  # EMAIL_PORT=587
-  # EMAIL_USE_TLS=True
-  # EMAIL_HOST_USER=youremail@gmail.com
-  # EMAIL_HOST_PASSWORD=your-google-app-password
+4. Nhận thông báo xác nhận:
+   - Đơn hàng được hệ thống ghi nhận ngay lập tức, có mã tra cứu và gửi thông báo 
+     đến bộ phận giao nhận của cửa hàng.
 
 
-3. CÁC CÁCH KHỞI CHẠY HỆ THỐNG
+PHẦN 2: HƯỚNG DẪN CHI TIẾT TỪNG BƯỚC
 --------------------------------------------------------------------------------
 
-CÁCH 1: KHỞI CHẠY BẰNG DOCKER (KHUYÊN DÙNG - ĐẦY ĐỦ VÀ NHANH NHẤT)
-------------------------------------------------------------------
-Yêu cầu: Đã cài đặt Docker & Docker Desktop.
+BƯỚC 1: LỰA CHỌN NGÔN NGỮ QUÝ KHÁCH MONG MUỐN
+- Nhìn vào góc trên bên phải của màn hình ứng dụng:
+  + Bấm vào nút "🇻🇳 Tiếng Việt" nếu Quý khách muốn trò chuyện bằng Tiếng Việt.
+  + Bấm vào nút "🇱🇦 ພາສາລາວ" nếu Quý khách muốn trò chuyện bằng Tiếng Lào.
+- Khi chọn, toàn bộ giao diện và trợ lý AI sẽ tự động giao tiếp bằng ngôn ngữ đó.
 
-Bước 1: Mở Terminal tại thư mục gốc của dự án.
-Bước 2: Chạy lệnh build và khởi động toàn bộ containers ngầm:
-   docker compose --env-file backend/.env up -d --build
+BƯỚC 2: TÌM HIỂU VÀ NHẬN TƯ VẤN SẢN PHẨM
+Quý khách có thể gõ bất kỳ câu hỏi nào vào ô nhắn tin ở cuối màn hình.
 
-Bước 3: Kiểm tra trạng thái containers:
-   docker compose ps
+Ví dụ các câu hỏi mẫu Quý khách có thể gửi:
+  * "Nhà tôi rộng 50m2, nhiều lông thú cưng thì nên dùng máy lọc không khí nào?"
+  * "Robot hút bụi Dreame L10s có tự giặt và sấy khô giẻ lau không?"
+  * "Nồi chiên không dầu Philips XXL này có hấp được gà nguyên con không em?"
+  * "Giá sản phẩm này đã bao gồm phí vận chuyển và bảo hành chưa?"
+  * "Sản phẩm hơi đắt, bên mình có chương trình giảm giá hay ưu đãi gì không?"
 
-Bước 4: Truy cập hệ thống:
-   - Giao diện người dùng & Admin: http://localhost:3000
-   - API Backend: http://localhost:8000/api/products/
-   - Django Admin: http://localhost:8000/admin/
+-> Trợ lý AI sẽ phản hồi ngay lập tức, cung cấp ưu điểm vượt trội và các chương trình
+   khuyến mãi tốt nhất hiện có dành cho Quý khách.
 
-Lệnh điều khiển Docker hữu ích:
-   - Xem log theo thời gian thực:  docker compose logs -f
-   - Dừng hệ thống:               docker compose stop
-   - Khởi động lại hệ thống:      docker compose start
-   - Xóa bỏ containers:           docker compose down
+BƯỚC 3: ĐẶT HÀNG NHANH CHÓNG (CHỐT ĐƠN)
+Khi Quý khách đã ưng ý sản phẩm và muốn đặt mua:
+1. Quý khách chỉ cần nhắn:
+   "Tôi muốn đặt mua 1 chiếc Robot Dreame này nhé" 
+   (hoặc "Tôi muốn chốt đơn sản phẩm này").
 
+2. Trợ lý AI sẽ xác nhận và mời Quý khách gửi các thông tin nhận hàng gồm:
+   - Họ và tên người nhận
+   - Số điện thoại liên hệ
+   - Địa chỉ giao hàng cụ thể
 
-CÁCH 2: KHỞI CHẠY TRỰC TIẾP TRÊN MÁY (LOCAL DEVELOPMENT)
---------------------------------------------------------
-Yêu cầu: Python 3.11+, Node.js 20+.
+3. Quý khách gửi thông tin giao hàng trong khung chat.
+   Ví dụ:
+   "Tên: Nguyễn Văn An, SĐT: 0987654321, địa chỉ: Số 18 Cầu Giấy, Hà Nội"
 
-Khởi động Backend (Django):
-   1. Mở Terminal:
-      cd backend
-   2. Tạo và kích hoạt môi trường ảo:
-      python3 -m venv venv
-      source venv/bin/activate       # Trên MacOS/Linux
-      # venv\Scripts\activate        # Trên Windows
-   3. Cài đặt thư viện:
-      pip install -r requirements.txt
-   4. Khởi tạo cơ sở dữ liệu và nạp sản phẩm mẫu:
-      python manage.py migrate
-      python manage.py seed_products
-   5. Chạy server:
-      python manage.py runserver 0.0.0.0:8000
-
-Khởi động Frontend (React):
-   1. Mở một cửa sổ Terminal mới:
-      cd frontend
-   2. Cài đặt thư viện:
-      npm install
-   3. Chạy giao diện phát triển:
-      npm run dev
-   4. Truy cập giao diện tại: http://localhost:5173
+4. Ngay khi nhận đủ thông tin, AI sẽ:
+   - Xác nhận lại toàn bộ thông tin đơn hàng và tổng tiền thanh toán.
+   - Hiển thị thẻ "Đơn hàng đã tạo thành công" ngay trong đoạn chat.
+   - Tự động chuyển thông tin tới đội ngũ đóng gói và vận chuyển.
 
 
-CÁCH 3: KHỞI CHẠY TRÊN GITHUB CODESPACES (TRÊN ĐÁM MÂY)
--------------------------------------------------------
-Dự án đã tích hợp sẵn tệp cấu hình .devcontainer.
-1. Truy cập liên kết:
-   https://github.com/codespaces/new?hide_repo_select=true&ref=master&repo=meodiemvuong1609%2Fsale-ai
-2. Bấm nút "Create codespace".
-3. Môi trường đám mây sẽ tự động cài đặt Docker-in-Docker và tự động chạy:
-   docker compose --env-file backend/.env up -d --build
-4. VS Code Codespaces sẽ tự động thông báo và mở cổng port 3000 trên trình duyệt.
-
-
-4. HƯỚNG DẪN SỬ DỤNG CÁC TÍNH NĂNG
+PHẦN 3: PHƯƠNG THỨC THANH TOÁN & GIAO HÀNG
 --------------------------------------------------------------------------------
+1. Hình thức thanh toán:
+   - Thanh toán khi nhận hàng (COD): Quý khách được quyền mở hộp kiểm tra đúng 
+     sản phẩm, tem bảo hành chính hãng rồi mới thanh toán tiền cho nhân viên giao hàng.
+   - Chuyển khoản ngân hàng: Quý khách có thể yêu cầu nhân viên hỗ trợ gửi số tài 
+     khoản chính thức của công ty khi nhân viên gọi điện xác nhận đơn.
 
-1. CHUYỂN ĐỔI NGÔN NGỮ:
-   - Ở góc trên bên phải màn hình chat, bấm chọn nút:
-     + "🇻🇳 Tiếng Việt" để trò chuyện bằng Tiếng Việt
-     + "🇱🇦 ພາສາລາວ" để trò chuyện bằng Tiếng Lào
-   - Khi đổi ngôn ngữ, toàn bộ giao diện và phản hồi từ AI sẽ tự động thích ứng với ngôn ngữ đã chọn.
+2. Thời gian giao hàng dự kiến:
+   - Nội thành: Giao nhanh trong vòng 12 - 24 giờ.
+   - Các tỉnh/thành phố khác: Từ 2 - 4 ngày làm việc.
 
-2. TƯ VẤN & XỬ LÝ TỪ CHỐI GIÁ:
-   - Khách hàng có thể hỏi về tính năng sản phẩm (Ví dụ: "Robot hút bụi có lau nhà và tự giặt giẻ không?").
-   - Khi khách hàng chê giá đắt: AI sẽ phân tích giá trị sử dụng lâu dài, tiện ích tiết kiệm thời gian, so sánh chi phí ngày dùng và đưa ra ưu đãi/khuyến mãi hợp lý để thuyết phục.
-
-3. KỊCH BẢN ĐẶT HÀNG TỰ ĐỘNG (CHỐT ĐƠN):
-   - Bước 1: Khách hàng đồng ý mua (Ví dụ: "Tôi muốn đặt 1 chiếc robot Dreame").
-   - Bước 2: AI xác nhận và xin thông tin giao hàng:
-     + Họ và tên người nhận
-     + Số điện thoại
-     + Địa chỉ nhận hàng
-   - Bước 3: Khách hàng cung cấp thông tin (Ví dụ: "Tôi tên Nguyễn Văn A, SĐT 0987654321, địa chỉ 123 Cầu Giấy, Hà Nội").
-   - Bước 4: AI tự động gọi function `create_order` tạo đơn hàng trong cơ sở dữ liệu và kích hoạt gửi email cho Admin.
-   - Bước 5: Màn hình chat hiển thị thẻ "Đơn Hàng Đã Tạo Thành Công" với mã đơn, tên sản phẩm, tổng tiền và trạng thái.
-
-4. TRANG QUẢN TRỊ ADMIN DASHBOARD:
-   - Truy cập tab "Quản trị" trên thanh điều hướng đầu trang (hoặc nút Quản lý).
-   - Tab "Sản phẩm": Xem danh sách sản phẩm, giá bán, giá sale, tồn kho, thêm sản phẩm mới.
-   - Tab "Đơn hàng": Quản lý danh sách đơn hàng đã chốt từ khách, thông tin liên hệ, trạng thái xử lý (Chờ xử lý, Đang giao, Hoàn tất).
-   - Tab "Cài đặt": Tùy chỉnh câu chào mặc định, tỷ lệ chiết khấu, số điện thoại hotline, email quản trị.
+3. Chính sách bảo hành & Đổi trả:
+   - 100% sản phẩm chính hãng, bảo hành điện tử chính hãng từ 12 đến 24 tháng.
+   - Đổi mới miễn phí trong vòng 7 ngày đầu tiên nếu phát hiện lỗi từ nhà sản xuất.
 
 
-5. CẤU TRÚC THƯ MỤC CHÍNH CỦA DỰ ÁN
+PHẦN 4: CÁC CÂU HỎI THƯỜNG GẶP (FAQ)
 --------------------------------------------------------------------------------
-sale-ai/
-├── .github/workflows/ci-cd.yml      # Quy trình CI/CD tự động kiểm tra và build
-├── .devcontainer/                   # Cấu hình GitHub Codespaces (Docker in Docker)
-├── backend/                         # Source code Django Backend
-│   ├── sale_ai/                     # Cấu hình dự án Django (settings, urls, wsgi)
-│   ├── sales_core/                  # App quản lý sản phẩm, đơn hàng, AI service
-│   │   ├── services/gemini_sales.py # Logic kết nối Gemini AI & Tool calling
-│   │   ├── models.py                # Database models (Product, Order, ChatSession...)
-│   │   ├── views.py                 # REST API endpoints
-│   │   └── management/commands/     # Lệnh seed dữ liệu sản phẩm mẫu
-│   ├── Dockerfile                   # Dockerfile cho Backend
-│   ├── entrypoint.sh                # Script khởi động tự động migrate & seed
-│   ├── requirements.txt             # Danh sách thư viện Python
-│   └── .env.example                 # Mẫu biến môi trường
-├── frontend/                        # Source code React Frontend
-│   ├── src/
-│   │   ├── components/              # ChatInterface, ProductCard, AdminTabs...
-│   │   ├── i18n/translations.js     # Bộ từ điển song ngữ Việt - Lào
-│   │   ├── contexts/LanguageContext # Quản lý ngôn ngữ người dùng
-│   │   └── App.jsx
-│   ├── Dockerfile                   # Dockerfile multi-stage cho Frontend
-│   └── nginx.conf                   # Cấu hình Nginx reverse proxy
-├── docker-compose.yml               # File chạy liên kết toàn bộ container
-└── HUONG_DAN_SU_DUNG.txt            # Tệp hướng dẫn sử dụng chi tiết này
+Hỏi: Tôi muốn thay đổi số điện thoại hoặc địa chỉ nhận hàng sau khi đã đặt thì làm sao?
+Đáp: Quý khách chỉ cần nhắn tin trực tiếp trong khung chat: "Tôi muốn đổi địa chỉ nhận 
+     thành..." hoặc gọi trực tiếp đến số Hotline của cửa hàng, chuyên viên sẽ cập nhật 
+     ngay cho Quý khách trước khi bưu tá xuất kho.
+
+Hỏi: Giá hiển thị trên màn hình đã là giá cuối cùng chưa?
+Đáp: Giá bán đã bao gồm thuế và các chương trình ưu đãi hiện hành. Khi Quý khách trao 
+     đổi với AI, AI có thể áp dụng thêm các mã giảm giá hoặc quà tặng độc quyền trong ngày.
+
+Hỏi: Tôi có cần thanh toán tiền cọc trước không?
+Đáp: Quý khách KHÔNG cần đặt cọc đối với các đơn hàng tiêu chuẩn. Quý khách chỉ thanh 
+     toán khi bưu tá giao hàng tận nơi.
+
+
+PHẦN 5: THÔNG TIN HỖ TRỢ TRỰC TIẾP
+--------------------------------------------------------------------------------
+Nếu Quý khách cần gặp chuyên viên tư vấn trực tiếp hoặc cần hỗ trợ bảo hành khẩn cấp:
+- Hotline Chăm sóc Khách hàng: 1900 xxxx (8:00 - 21:00 hàng ngày)
+- Email hỗ trợ: admin@sale-ai.vn
+- Địa chỉ showroom: Hệ thống showroom phân phối thiết bị gia dụng thông minh toàn quốc.
+
+Kính chúc Quý khách có trải nghiệm mua sắm tiện lợi và hài lòng tại Sale-AI!
 ================================================================================

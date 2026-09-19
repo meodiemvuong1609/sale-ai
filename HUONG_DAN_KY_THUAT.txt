@@ -1,0 +1,37 @@
+================================================================================
+          HƯỚNG DẪN KỸ THUẬT & TRIỂN KHAI HỆ THỐNG SALE-AI (DEVELOPER / ADMIN)
+================================================================================
+
+1. YÊU CẦU HỆ THỐNG
+- Docker & Docker Compose (Phiên bản mới nhất)
+- Python 3.11+ / Node.js 20+ (Nếu chạy local không dùng Docker)
+- Khóa Google Gemini API (gemini-2.5-flash)
+
+2. CẤU HÌNH BIẾN MÔI TRƯỜNG (backend/.env)
+   GEMINI_API_KEY=your_gemini_api_key_here
+   GEMINI_MODEL=gemini-2.5-flash
+   ADMIN_NOTIFICATION_EMAIL=admin@sale-ai.vn
+   EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+
+3. TRIỂN KHAI VỚI DOCKER COMPOSE (Khuyên dùng)
+   # Khởi chạy toàn bộ hệ thống
+   docker compose --env-file backend/.env up -d --build
+
+   # Xem logs
+   docker compose logs -f
+
+   # Kiểm tra trạng thái
+   docker compose ps
+
+   - Web Frontend (Nginx): http://localhost:3000
+   - Backend API (Django): http://localhost:8000/api/products/
+   - Django Admin:         http://localhost:8000/admin/
+
+4. TRIỂN KHAI TRÊN GITHUB CODESPACES
+   URL 1-Click: https://github.com/codespaces/new?hide_repo_select=true&ref=master&repo=meodiemvuong1609%2Fsale-ai
+   (Tự động chạy .devcontainer/post-create.sh và dựng docker-in-docker)
+
+5. CI/CD GITHUB ACTIONS
+   Workflow: .github/workflows/ci-cd.yml
+   Bao gồm: backend-check, frontend-check, docker-build.
+================================================================================
