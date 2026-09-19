@@ -1,0 +1,166 @@
+================================================================================
+          HƯỚNG DẪN SỬ DỤNG HỆ THỐNG SALE-AI (TƯ VẤN & BÁN HÀNG TỰ ĐỘNG)
+================================================================================
+
+1. GIỚI THIỆU HỆ THỐNG
+--------------------------------------------------------------------------------
+Hệ thống Sale-AI là nền tảng bán hàng thương mại điện tử thông minh kết hợp:
+- Backend: Django 5.x + Django REST Framework + Google Gemini AI (gemini-2.5-flash)
+- Frontend: React 19 + Vite + Vanilla CSS hiện đại
+- Hỗ trợ đa ngôn ngữ: Tiếng Việt (vi) và Tiếng Lào (lo - ພາສາລາວ)
+- AI Sales Agent: Nhận diện nhu cầu, tư vấn chi tiết, xử lý từ chối giá, chốt đơn tự động
+- Đặt hàng & Gửi Email: Tạo đơn trực tiếp trong luồng chat và gửi email thông báo tới Admin
+- Triển khai: Đóng gói Docker, Docker Compose, CI/CD GitHub Actions, GitHub Codespaces
+
+GitHub Repository: https://github.com/meodiemvuong1609/sale-ai (Nhánh: master)
+
+
+2. CẤU HÌNH BIẾN MÔI TRƯỜNG (backend/.env)
+--------------------------------------------------------------------------------
+Tệp cấu hình nằm tại: backend/.env
+Định dạng mẫu (tham khảo backend/.env.example):
+
+  # 1. Khóa Google Gemini API
+  GEMINI_API_KEY=your_gemini_api_key_here
+  GEMINI_MODEL=gemini-2.5-flash
+
+  # 2. Email nhận thông báo khi có đơn hàng mới
+  ADMIN_NOTIFICATION_EMAIL=admin@sale-ai.vn
+  DEFAULT_FROM_EMAIL=noreply@sale-ai.vn
+
+  # 3. Chế độ gửi email
+  # Chế độ thử nghiệm (In trực tiếp nội dung email ra terminal/console log):
+  EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+
+  # Chế độ gửi email thực tế qua Gmail SMTP:
+  # EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+  # EMAIL_HOST=smtp.gmail.com
+  # EMAIL_PORT=587
+  # EMAIL_USE_TLS=True
+  # EMAIL_HOST_USER=youremail@gmail.com
+  # EMAIL_HOST_PASSWORD=your-google-app-password
+
+
+3. CÁC CÁCH KHỞI CHẠY HỆ THỐNG
+--------------------------------------------------------------------------------
+
+CÁCH 1: KHỞI CHẠY BẰNG DOCKER (KHUYÊN DÙNG - ĐẦY ĐỦ VÀ NHANH NHẤT)
+------------------------------------------------------------------
+Yêu cầu: Đã cài đặt Docker & Docker Desktop.
+
+Bước 1: Mở Terminal tại thư mục gốc của dự án.
+Bước 2: Chạy lệnh build và khởi động toàn bộ containers ngầm:
+   docker compose --env-file backend/.env up -d --build
+
+Bước 3: Kiểm tra trạng thái containers:
+   docker compose ps
+
+Bước 4: Truy cập hệ thống:
+   - Giao diện người dùng & Admin: http://localhost:3000
+   - API Backend: http://localhost:8000/api/products/
+   - Django Admin: http://localhost:8000/admin/
+
+Lệnh điều khiển Docker hữu ích:
+   - Xem log theo thời gian thực:  docker compose logs -f
+   - Dừng hệ thống:               docker compose stop
+   - Khởi động lại hệ thống:      docker compose start
+   - Xóa bỏ containers:           docker compose down
+
+
+CÁCH 2: KHỞI CHẠY TRỰC TIẾP TRÊN MÁY (LOCAL DEVELOPMENT)
+--------------------------------------------------------
+Yêu cầu: Python 3.11+, Node.js 20+.
+
+Khởi động Backend (Django):
+   1. Mở Terminal:
+      cd backend
+   2. Tạo và kích hoạt môi trường ảo:
+      python3 -m venv venv
+      source venv/bin/activate       # Trên MacOS/Linux
+      # venv\Scripts\activate        # Trên Windows
+   3. Cài đặt thư viện:
+      pip install -r requirements.txt
+   4. Khởi tạo cơ sở dữ liệu và nạp sản phẩm mẫu:
+      python manage.py migrate
+      python manage.py seed_products
+   5. Chạy server:
+      python manage.py runserver 0.0.0.0:8000
+
+Khởi động Frontend (React):
+   1. Mở một cửa sổ Terminal mới:
+      cd frontend
+   2. Cài đặt thư viện:
+      npm install
+   3. Chạy giao diện phát triển:
+      npm run dev
+   4. Truy cập giao diện tại: http://localhost:5173
+
+
+CÁCH 3: KHỞI CHẠY TRÊN GITHUB CODESPACES (TRÊN ĐÁM MÂY)
+-------------------------------------------------------
+Dự án đã tích hợp sẵn tệp cấu hình .devcontainer.
+1. Truy cập liên kết:
+   https://github.com/codespaces/new?hide_repo_select=true&ref=master&repo=meodiemvuong1609%2Fsale-ai
+2. Bấm nút "Create codespace".
+3. Môi trường đám mây sẽ tự động cài đặt Docker-in-Docker và tự động chạy:
+   docker compose --env-file backend/.env up -d --build
+4. VS Code Codespaces sẽ tự động thông báo và mở cổng port 3000 trên trình duyệt.
+
+
+4. HƯỚNG DẪN SỬ DỤNG CÁC TÍNH NĂNG
+--------------------------------------------------------------------------------
+
+1. CHUYỂN ĐỔI NGÔN NGỮ:
+   - Ở góc trên bên phải màn hình chat, bấm chọn nút:
+     + "🇻🇳 Tiếng Việt" để trò chuyện bằng Tiếng Việt
+     + "🇱🇦 ພາສາລາວ" để trò chuyện bằng Tiếng Lào
+   - Khi đổi ngôn ngữ, toàn bộ giao diện và phản hồi từ AI sẽ tự động thích ứng với ngôn ngữ đã chọn.
+
+2. TƯ VẤN & XỬ LÝ TỪ CHỐI GIÁ:
+   - Khách hàng có thể hỏi về tính năng sản phẩm (Ví dụ: "Robot hút bụi có lau nhà và tự giặt giẻ không?").
+   - Khi khách hàng chê giá đắt: AI sẽ phân tích giá trị sử dụng lâu dài, tiện ích tiết kiệm thời gian, so sánh chi phí ngày dùng và đưa ra ưu đãi/khuyến mãi hợp lý để thuyết phục.
+
+3. KỊCH BẢN ĐẶT HÀNG TỰ ĐỘNG (CHỐT ĐƠN):
+   - Bước 1: Khách hàng đồng ý mua (Ví dụ: "Tôi muốn đặt 1 chiếc robot Dreame").
+   - Bước 2: AI xác nhận và xin thông tin giao hàng:
+     + Họ và tên người nhận
+     + Số điện thoại
+     + Địa chỉ nhận hàng
+   - Bước 3: Khách hàng cung cấp thông tin (Ví dụ: "Tôi tên Nguyễn Văn A, SĐT 0987654321, địa chỉ 123 Cầu Giấy, Hà Nội").
+   - Bước 4: AI tự động gọi function `create_order` tạo đơn hàng trong cơ sở dữ liệu và kích hoạt gửi email cho Admin.
+   - Bước 5: Màn hình chat hiển thị thẻ "Đơn Hàng Đã Tạo Thành Công" với mã đơn, tên sản phẩm, tổng tiền và trạng thái.
+
+4. TRANG QUẢN TRỊ ADMIN DASHBOARD:
+   - Truy cập tab "Quản trị" trên thanh điều hướng đầu trang (hoặc nút Quản lý).
+   - Tab "Sản phẩm": Xem danh sách sản phẩm, giá bán, giá sale, tồn kho, thêm sản phẩm mới.
+   - Tab "Đơn hàng": Quản lý danh sách đơn hàng đã chốt từ khách, thông tin liên hệ, trạng thái xử lý (Chờ xử lý, Đang giao, Hoàn tất).
+   - Tab "Cài đặt": Tùy chỉnh câu chào mặc định, tỷ lệ chiết khấu, số điện thoại hotline, email quản trị.
+
+
+5. CẤU TRÚC THƯ MỤC CHÍNH CỦA DỰ ÁN
+--------------------------------------------------------------------------------
+sale-ai/
+├── .github/workflows/ci-cd.yml      # Quy trình CI/CD tự động kiểm tra và build
+├── .devcontainer/                   # Cấu hình GitHub Codespaces (Docker in Docker)
+├── backend/                         # Source code Django Backend
+│   ├── sale_ai/                     # Cấu hình dự án Django (settings, urls, wsgi)
+│   ├── sales_core/                  # App quản lý sản phẩm, đơn hàng, AI service
+│   │   ├── services/gemini_sales.py # Logic kết nối Gemini AI & Tool calling
+│   │   ├── models.py                # Database models (Product, Order, ChatSession...)
+│   │   ├── views.py                 # REST API endpoints
+│   │   └── management/commands/     # Lệnh seed dữ liệu sản phẩm mẫu
+│   ├── Dockerfile                   # Dockerfile cho Backend
+│   ├── entrypoint.sh                # Script khởi động tự động migrate & seed
+│   ├── requirements.txt             # Danh sách thư viện Python
+│   └── .env.example                 # Mẫu biến môi trường
+├── frontend/                        # Source code React Frontend
+│   ├── src/
+│   │   ├── components/              # ChatInterface, ProductCard, AdminTabs...
+│   │   ├── i18n/translations.js     # Bộ từ điển song ngữ Việt - Lào
+│   │   ├── contexts/LanguageContext # Quản lý ngôn ngữ người dùng
+│   │   └── App.jsx
+│   ├── Dockerfile                   # Dockerfile multi-stage cho Frontend
+│   └── nginx.conf                   # Cấu hình Nginx reverse proxy
+├── docker-compose.yml               # File chạy liên kết toàn bộ container
+└── HUONG_DAN_SU_DUNG.txt            # Tệp hướng dẫn sử dụng chi tiết này
+================================================================================
